@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap&subset=cyrillic');
+
+body {
+   margin: 0;
+   padding: 0;
+   display: flex;
+   font-family: Georgia, 'Times New Roman', Times, serif;
+   justify-content: center;
+   background: #e0ff96;
+}
+
+* {
+   box-sizing: border-box;
+}
+
+.error{
+    background: rgb(114, 47, 47);
+    z-index: 2;
+ }
+ 
+.decor {
+   position: relative;
+   width: 450px;
+   margin: 50px auto 0;
+   background: #e0ff96;
+   min-height: 765px;
+   height: auto;
+}
+
+.left-form,
+.right-form {
+   content: "";
+   position: absolute;
+   width: 50px;
+   height: 20px;
+   background: #fce1d5;
+   border-radius: 20px;
+}
+
+.left-form {
+   bottom: 60px;
+   left: -30px;
+}
+
+.right-form {
+   top: 60px;
+   right: -30px;
+}
+
+.left-form:before,
+.left-form:after,
+.right-form,
+.right-form {
+   content: "";
+   position: absolute;
+   width: 50px;
+   height: 20px;
+   background: #e0ff96;
+}
+
+.left-form:before {
+   top: -20px;
+}
+
+.left-form:after {
+   top: 20px;
+   left: 10px;
+}
+
+.right-form:before {
+   top: -20px;
+   right: 0;
+}
+
+.right-form:after {
+   top: 20px;
+   right: 10px;
+}
+
+.circle {
+   position: absolute;
+   bottom: 80px;
+   left: -55px;
+   width: 20px;
+   height: 20px;
+   background: #e0ff96;
+}
+
+.in-form {
+   padding: 50px;
+   padding-bottom: 35px;
+}
+
+.in-form input[type="email"],
+.in-form input[type="text"],
+.in-form textarea,
+.in-form select {
+   display: block;
+   width: 100%;
+   padding: 0 20px;
+   margin-bottom: 30px;
+   background: #ebffd8;
+   line-height: 40px;
+   border-width: 0;
+   font-family: 'Roboto', sans-serif;
+}
+
+.in-form select {
+   padding: 5px;
+   width: 70px;
+   margin-left: 5px;
+}
+
+.in-form input[type="submit"] {
+   width: 150px;
+   height: 40px;
+   margin-top: 30px;
+   background: #f6fed7;
+   border: 1px solid #fefcb4;
+   border-bottom: 4mm ridge rgba(211, 220, 50, .6);
+   color: rgb(2, 2, 2);
+   font-size: 16px;
+}
+
+.in-form textarea {
+   resize: none;
+}
+
+.in-form h3 {
+   margin-top: 0;
+   font-family: 'Roboto', sans-serif;
+   font-weight: 500;
+   font-size: 24px;
+   color: #afbb59;
+}
+
+.radio {
+    margin-left: 5px;
+    margin-bottom: 30px;
+ }
