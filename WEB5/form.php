@@ -1,248 +1,190 @@
-<!DOCTYPE html>
-<html lang="ru">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <title>Задание 5</title>
-  </head>
-  <body>
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST" class="decor">
-      <div class="left-form"></div>
-      <div class="right-form"></div>
-      <div class="circle"></div>
-      <div class="in-form">
-        <h3 style="text-align: center;">Форма заполнения данных</h3>
-      <div style="color: red; margin-bottom: 23px; text-align: left; font-size: 16px; <?php
-      if($error){
-        echo "display: none;";
+<style>
+body{
+    background-image: url("2.jpg");
+    background-size: no-repeat;
+    display: block;
+    justify-content:center;
+    margin-top:5%;
+    margin-bottom:5%;
+}
+
+.main{
+    padding: 40px;
+    width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #95bade;
+    border: 2px solid #26527C;
+}
+
+h1{
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+a{
+    color: black;
+    display: flex;
+    justify-content:center;
+}
+
+	
+.button {
+  padding: 5%;
+  border: 1px solid #26527C;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pas{
+    margin:2%;
+    padding: 5%;
+    border: 1px solid;
+    border-color: #26527C;
+    border-radius: 3px;
+}
+	
+.error {
+    border-color: #fd0130;
+  }
+</style>
+
+
+<body>
+    <div class="main">
+	    
+    <?php
+       if (!empty($messages)) {
+         print('<div id="messages">');
+         // Выводим все сообщения.
+         foreach ($messages as $message) {
+            print($message);
+         }
+         print('</div>');
       }
-      ?>">
-      <ul>
-      <?php
-        $pr="";
-        if (isset($_COOKIE["errorn"])) {
-          $pr=$_COOKIE["errorn"];
-          echo "<li>$pr</li>";
-        }
-        if(isset($_COOKIE["errore"])){
-          $pr=$_COOKIE["errore"];
-          echo "<li>$pr</li>";
-        }
-        if(isset($_COOKIE["errorp"])){
-          $pr=$_COOKIE["errorp"];
-          echo "<li>$pr</li>";
-        }
-        if(isset($_COOKIE["errork"])){
-          $pr=$_COOKIE["errork"];
-          echo "<li>$pr</li>";
-        }
-        if(isset($_COOKIE["errors"])){
-          $pr=$_COOKIE["errors"];
-          echo "<li>$pr</li>";
-        }
-        if(isset($_COOKIE["errorb"])){
-          $pr=$_COOKIE["errorb"];
-          echo "<li>$pr</li>";
-        }
-        if(isset($_COOKIE["ok"])){
-            $pr=$_COOKIE["ok"];
-            echo "<li>$pr</li>";
-        }
-      ?></ul></div>
-      <div style="color: green; height: 25px; margin-bottom: 18px; text-align: center; font-size: 20px; <?php
-      if(!isset($_COOKIE["mark"])){
-        echo "display: none;";
-      }
-      ?>">
-      <?php
-      if(isset($_COOKIE["mark"])){
-        if($_COOKIE["mark"]=="no"){
-          echo "Ваши данные успешно отправлены.";
-          setcookie("mark","",10000);
-        }else{
-          echo "Ошибка отправки данных. Попробуйте ещё раз.";
-          setcookie("mark","",10000);
-        }
-      }
-      ?>
-      </div>
-      <div style="color: orange; height: 25px; margin-bottom: 18px;  text-align: center; font-size: 20px; <?php
-      if(!isset($_COOKIE["login_new"])){
-        echo "display: none;";
-      }
-      ?>">
-        <?php
-        if(isset($_COOKIE["new_log"])){
-          $log = $_COOKIE["new_log"];
-          $pass = $_COOKIE["new_pass"];
-          setcookie("new_log","",10000);
-          setcookie("new_pass","",10000);
-          echo "Логин: $log</br>Пароль: $pass";
-        }
-        ?>
-      </div>
-        <input type="text" placeholder="Введите имя" name="name" style="
-        <?php
-          if (isset($_COOKIE["errorn"])) {
-            echo "background: #f6f39e";
-          }
-        ?>
-        "
-        value="<?php
-          if(isset($_COOKIE["name"])){
-            echo $_COOKIE["name"];
-          }
-          ?>"/>
-        <input type="email" placeholder="Email" name="email" style="
-        <?php
-          if (isset($_COOKIE["errore"])){
-            echo "background: #f6f39e";
-          }
-        ?>
-        "
-        value="<?php
-          if(isset($_COOKIE["email"])){
-            echo $_COOKIE["email"];
-          }
-          ?>"/>
-        <a style="padding-left: 5px" style="white-space: nowrap"
-          >Укажите год вашего рождения:
-          <select
-            id="year"
-            name="year"
-            size="1"
-            style="display: inline"
-          ></select
-        ></a>
-        <script>
-          var objSel = document.getElementById("year");
-          var a = 0;
-          for (var i = 2023; i >= 1920; i--) {
-            objSel.options[a] = new Option(i, i);
-            a++;
-          }
-          document.getElementById('year').querySelectorAll('option')[2023-Number(<?php
-            if(isset($_COOKIE["year"])){
-              echo $_COOKIE["year"];}
-            ?>)].selected = true;
-        </script>
-        <span style="<?php
-        if(isset($_COOKIE["errorp"])){
-          echo "border-radius: 20px; background: #f6f39e;";
-        } 
-        ?>"><a style="margin-left: 5px">Укажите пол: </a
-        ><a style="margin-left: 17px"
-          >Мужской<input
-            type="radio"
-            name="pol"
-            class="radio"
-            value="Мужской" 
-            <?php
-              if(isset($_COOKIE["pol"])){
-                if($_COOKIE["pol"]=="Мужской"){
-                  echo "checked";
-                }
-              }?>/></a
-        ><a style="margin-left: 10px"
-          >Женский<input type="radio" name="pol" class="radio" value="Женский"
-          <?php
-            if(isset($_COOKIE["pol"])){
-              if($_COOKIE["pol"]=="Женский"){
-                echo "checked";
+    ?>
+	    
+    <h1>Форма</h1>
+    
+    <form action="index.php" method="POST">
+            <div class="pas <?php if ($errors['name']) {print 'error';} ?>" >
+                Имя:
+                <input name="name" placeholder="Введите имя" 
+                 value="<?php print $values['name']; ?>" />
+            </div>
+
+            <div class="pas <?php if ($errors['email']) {print 'error';} ?>">
+                E-mail:
+                <input name="email" type="email" placeholder="Введите почту" value="<?php print $values['email']; ?>"
+	            >
+            </div>
+
+            <div class="pas" >
+                Год рождения:
+                <select id="yearB" name="year" >
+                <?php
+             for($i=1950;$i<=2023;$i++){
+             if($values['year']==$i){
+             printf("<option value=%d selected>%d </option>",$i,$i);
               }
+             else{
+             printf("<option value=%d>%d </option>",$i,$i);
             }
-            ?>/></a></span>
-        <br />
-        <span style="<?php
-        if(isset($_COOKIE["errork"])){
-          echo "border-radius: 20px; background: #f6f39e;";
-        }
-        ?>"><a style="margin-left: 5px">Кол-во конечностей:
-          <a style="margin-left: 10px"
-            >2 <input type="radio" name="kol" value="2"
-            <?php
-              if(isset($_COOKIE["kol"])){
-                if($_COOKIE["kol"]=="2"){
-                  echo "checked";
-                }
-              }?> /></a>
-          <a style="margin-left: 18px"
-            >4 <input type="radio" name="kol" value="4"
-            <?php
-              if(isset($_COOKIE["kol"])){
-                if($_COOKIE["kol"]=="4"){
-                  echo "checked";
-                }
-              }?> /></a>
-          <a style="margin-left: 18px"
-            >6 <input type="radio" name="kol" value="6"
-            <?php
-              if(isset($_COOKIE["kol"])){
-                if($_COOKIE["kol"]=="6"){
-                  echo "checked";
-                }
-              }?>
-             style="margin-bottom: 30px"/>
-          </a>
-        </a>
-          </span>
-        <a style="margin-left: 6px">
-          Укажите сверхспособности:
-          <br />
-          <select
-            name="superpowers[]"
-            style="width: 180px; display: inline; height: 60px; margin-top: 10px; margin-bottom: 30px;overflow-y: hidden;
-              <?php
-              if(isset($_COOKIE["errors"])){
-                echo "background: #f6f39e;";
-              }
-              ?>"
-            multiple="multiple" >
-            <option value="бессмертие" <?php
-              if(isset($_COOKIE["immortality"])){
-                echo "selected";
-              }
-              ?>>бессмертие</option>
-            <option value="левитация" <?php
-              if(isset($_COOKIE["levitation"])){
-                echo "selected";
-              }
-              ?>>левитация</option>
-            <option value="прохождение сквозь стены" <?php
-              if(isset($_COOKIE["passing_through_walls"])){
-                echo "selected";
-              }
-              ?>>
-              прохождение сквозь стены</option>
-          </select>
-        </a>
-        <textarea placeholder="Биография" rows="3" name="biography" maxlength="511" style="<?php
-        if(isset($_COOKIE["errorb"])){
-          echo "background: #f6f39e; border-radius: 20px;";
-        }
-        ?>"><?php
-          if(isset($_COOKIE["biography"])){
-            echo $_COOKIE["biography"];
           }
-          ?></textarea>
-        <a style="display: flex; vertical-align: middle"
-          ><input
-            type="checkbox"
-            style="width: 20px; height: 20px; margin-right: 10px"
-            value="Согласен"
-            name="ok"
-          /><span style="margin-top: 3px"
-            >C правилами ознакомлен.</span></a
-        >
-        <div
-          style="width: 100%; justify-content: center; height: 50px; display: flex;">
-          <input type="submit" value="Отправить" style="margin: 15px"/>
-        </div>
-        <div style="text-align: center; margin-top: 20px">
-        <a href="log.php" style="">Другой пользователь</a>
-        </div>
-      </div>
-    </form>
-  </body>
-</html>
+          ?>
+          </select>
+            </div>
+
+            <div class="pas <?php if ($errors['radio-1']) {print 'error';} ?>"> 
+                Пол:<br>
+                <input type="radio" name="radio-1" value="male"  <?php if($values['radio-1']=="male") {print 'checked';} ?>/>
+                Мужской
+                <input type="radio" name="radio-1" value="female" <?php if($values['radio-1']=="female") {print 'checked';} ?>/>
+                Женский
+            </div>
+
+
+
+            <div class="pas <?php if ($errors['radio-2']) {print 'error';} ?>">
+                Количество конечностей:<br>
+                    <input type="radio" name="radio-2" value="1" <?php if($values['radio-2']=="1") {print 'checked';} ?>/>
+                    1
+
+                    <input type="radio" name="radio-2" value="2" <?php if($values['radio-2']=="2") {print 'checked';} ?>/>
+                    2
+
+                    <input type="radio" name="radio-2" value="3" <?php if($values['radio-2']=="3") {print 'checked';} ?>/>
+                    3
+
+                    <input type="radio" name="radio-2" value="4" <?php if($values['radio-2']=="4") {print 'checked';} ?>/>
+                    4
+            </div>
+
+
+            <div class="pas <?php if ($errors['super']) {print 'error';} ?>">
+                Сверхспособности:
+                
+                    <select name="super[]" multiple="multiple">
+                    <?php if ($errors['super']) {print 'class="error"';} ?> >
+                    <option value="inv" <?php if($values['inv']==1){print 'selected';} ?>>Бессмертие</option>
+                    <option value="walk" <?php if($values['walk']==1){print 'selected';} ?>>Прохождение сквозь стены</option>
+                    <option value="fly" <?php if($values['fly']==1){print 'selected';} ?>>Левитация</option>
+                    </select>
+                
+            </div>
+
+            <div class="pas <?php if ($errors['bio']) {print 'error';} ?>">
+                Биография:
+                <textarea name="bio"><?php print $values['bio']; ?></textarea>
+            </div>
+
+                        <?php 
+                $cl_e='';
+                $ch='';
+                if($values['check-1'] or !empty($_SESSION['login'])){
+                $ch='checked';
+                }
+                if ($errors['check-1']) {
+                $cl_e='class="error"';
+                }
+                if(empty($_SESSION['login'])){
+                print('
+                <div  '.$cl_e.' >
+                <input name="check" type="checkbox" '.$ch.'> Я согласен на обработку данных <br>
+                </div>');}
+                ?>
+
+                <p class = "button">
+                   <input type="submit" value="Отправить" />
+                </p>
+                </form>
+            <?php
+            if(empty($_SESSION['login'])){
+            echo'
+            <div class="login">
+                <p> <a href="log.php">У меня уже есть аккаунт</a></p>
+            </div>';
+            }
+            else{
+                echo '
+                <div class="logout">
+                <form action="index.php" method="post">
+		   <p class = "button">
+                      <input name="logout" type="submit" value="Выйти">
+                   </p>
+                </form>
+                </div>';
+            } ?>
+
+            <!-- <div class="pas <?php if ($errors['check-1']) {print 'error';} ?> ">
+                <input type="checkbox" name="check-1" <?php if($values['check-1']==TRUE){print 'checked';} ?>/> С контактом ознакомлен(а)
+            </div>
+            <p>
+                Отправка формы:
+                <input type="submit" value="Send" />
+            </p> -->
+        </form>
+    </div>
+</body>
