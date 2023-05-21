@@ -1,190 +1,185 @@
-<style>
-body{
-    background-image: url("2.jpg");
-    background-size: no-repeat;
-    display: block;
-    justify-content:center;
-    margin-top:5%;
-    margin-bottom:5%;
-}
-
-.main{
-    padding: 40px;
-    width: 250px;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #95bade;
-    border: 2px solid #26527C;
-}
-
-h1{
-    margin-left: 25%;
-    margin-right: 25%;
-}
-
-a{
-    color: black;
-    display: flex;
-    justify-content:center;
-}
-
-	
-.button {
-  padding: 5%;
-  border: 1px solid #26527C;
-  border-radius: 3px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.pas{
-    margin:2%;
-    padding: 5%;
-    border: 1px solid;
-    border-color: #26527C;
-    border-radius: 3px;
-}
-	
-.error {
-    border-color: #fd0130;
-  }
-</style>
-
-
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Задание 5</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+  <style>
+       .error {
+           border: 2px solid red;
+       }
+  </style>
+          
+</head>
+  
 <body>
-    <div class="main">
-	    
-    <?php
-       if (!empty($messages)) {
-         print('<div id="messages">');
-         // Выводим все сообщения.
-         foreach ($messages as $message) {
-            print($message);
-         }
-         print('</div>');
-      }
-    ?>
-	    
-    <h1>Форма</h1>
-    
-    <form action="index.php" method="POST">
-            <div class="pas <?php if ($errors['name']) {print 'error';} ?>" >
-                Имя:
-                <input name="name" placeholder="Введите имя" 
-                 value="<?php print $values['name']; ?>" />
-            </div>
+  
+  <?php
+if (!empty($messages)) {
+    print('<div id="messages">');
+    foreach ($messages as $message) {
+        print($message);
+    }
+    print('</div>');
+}
+?>
+  
+<div class="container">
 
-            <div class="pas <?php if ($errors['email']) {print 'error';} ?>">
-                E-mail:
-                <input name="email" type="email" placeholder="Введите почту" value="<?php print $values['email']; ?>"
-	            >
-            </div>
+  <div class="container-sm theme-list py-3 pl-0 mb-3">
+    <div class="d-flex flex-column align-items-center">
 
-            <div class="pas" >
-                Год рождения:
-                <select id="yearB" name="year" >
-                <?php
-             for($i=1950;$i<=2023;$i++){
-             if($values['year']==$i){
-             printf("<option value=%d selected>%d </option>",$i,$i);
-              }
-             else{
-             printf("<option value=%d>%d </option>",$i,$i);
-            }
-          }
-          ?>
-          </select>
-            </div>
+      <form class="d-block p-2" action="index.php" method="POST">
 
-            <div class="pas <?php if ($errors['radio-1']) {print 'error';} ?>"> 
-                Пол:<br>
-                <input type="radio" name="radio-1" value="male"  <?php if($values['radio-1']=="male") {print 'checked';} ?>/>
-                Мужской
-                <input type="radio" name="radio-1" value="female" <?php if($values['radio-1']=="female") {print 'checked';} ?>/>
-                Женский
-            </div>
+          <div class="form-floating mb-3">
+            
+                  <input
+                        name="fio"
+                        <?php if ($errors['fio_empty'] || $errors['fio_error']) {print 'class="form-control error"';}else{print 'class="form-control"';} ?>
+                        type="text"
+                        placeholder="FirstName LastName"
+                        value="<?php print $values['fio_value']; ?>";
+                        id="fio"
+                    >
+            
+                  <label for="fio" class="form-label">Ваше имя</label>
+                </div>
 
+        
+          <div class="form-floating mb-3">
+                  
+                  <input
+                        <?php if ($errors['email_error']) {print 'class="form-control error"';}else{print 'class="form-control"';} ?>
+                        name="email"
+                        type="email"
+                        placeholder="name@example.com"
+                        value="<?php print $values['email_value']; ?>";
+                        id="email"
+                    >
+                  
+                  <label for="email" class="form-label">Ваш email</label>
+                </div>
+        
 
-
-            <div class="pas <?php if ($errors['radio-2']) {print 'error';} ?>">
-                Количество конечностей:<br>
-                    <input type="radio" name="radio-2" value="1" <?php if($values['radio-2']=="1") {print 'checked';} ?>/>
-                    1
-
-                    <input type="radio" name="radio-2" value="2" <?php if($values['radio-2']=="2") {print 'checked';} ?>/>
-                    2
-
-                    <input type="radio" name="radio-2" value="3" <?php if($values['radio-2']=="3") {print 'checked';} ?>/>
-                    3
-
-                    <input type="radio" name="radio-2" value="4" <?php if($values['radio-2']=="4") {print 'checked';} ?>/>
-                    4
-            </div>
+          <div class="mb-3">
+            <label for="year" class="form-label">Год рождения</label>
+                <select <?php if ($errors['year_empty']) {print 'class="form-select error"';}else{print 'class="form-select"';} ?> name="year" id="year">
+                    <option selected="selected" value="---">---</option>
+                    <?php for($i = 1900; $i < 2020; $i++) {?>
+                          <option <?php if($values['year_value'] == $i) print 'selected="selected"';?> value="<?php print $i; ?>"><?= $i; ?></option>
+                  <?php }?>
+                </select>
+        </div>
 
 
-            <div class="pas <?php if ($errors['super']) {print 'error';} ?>">
-                Сверхспособности:
-                
-                    <select name="super[]" multiple="multiple">
-                    <?php if ($errors['super']) {print 'class="error"';} ?> >
-                    <option value="inv" <?php if($values['inv']==1){print 'selected';} ?>>Бессмертие</option>
-                    <option value="walk" <?php if($values['walk']==1){print 'selected';} ?>>Прохождение сквозь стены</option>
-                    <option value="fly" <?php if($values['fly']==1){print 'selected';} ?>>Левитация</option>
+            
+                <div class="mb-3">
+                    <label <?php if ($errors['sex_empty']) {print 'class="form-label error"';}else{print 'class="form-label"';} ?>>Пол</label>
+                    <br>
+                    <input
+                        class="form-check-input"
+                        type="radio"
+                        name="sex"
+                        value="0"
+                        <?php if($values['sex_value'] == 0) print 'checked';?>
+                    > Male
+
+                    <input
+                        class="form-check-input"
+                        type="radio"
+                        name="sex"
+                        value="1"
+                        <?php if($values['sex_value'] == 1) print 'checked';?>
+                    > Female
+
+                </div>
+
+            
+                <div class="mb-3">
+                    <label <?php if ($errors['limb_empty']) {print 'class="form-label error"';}else{print 'class="form-label"';} ?>>Число конечностей</label>
+                    <br>
+                    <input
+                        class="form-check-input"
+                        type="radio"
+                        name="limb"
+                        value="2"
+                        <?php if($values['limb_value'] == 2) print 'checked';?>
+                    >
+                    <label class="form-check-label">2</label>
+                    <input
+                        class="form-check-input"
+                        type="radio"
+                        name="limb"
+                        value="4"
+                        <?php if($values['limb_value'] == 4) print 'checked';?>
+                    >
+                    <label class="form-check-label">4</label>
+                    <input
+                        class="form-check-input"
+                        type="radio"
+                        name="limb"
+                        value="6"
+                        <?php if($values['limb_value'] == 6) print 'checked';?>
+                    >
+                    <label class="form-check-label">6</label>
+                    <input
+                        class="form-check-input"
+                        type="radio"
+                        name="limb"
+                        value="8"
+                        <?php if($values['limb_value'] == 8) print 'checked';?>
+                    >
+                    <label class="form-check-label">8</label>
+                    <input
+                        class="form-check-input"
+                        type="radio"
+                        name="limb"
+                        value="10"
+                        <?php if($values['limb_value'] == 10) print 'checked';?>
+                    >
+                    <label class="form-check-label">10</label>
+                </div>
+
+                <div class="mb-3">
+                    <label <?php if ($errors['abilities_error']||$errors['abilities_empty']) {print 'class="form-label error"';}else{print 'class="form-label"';} ?>>Сверхсособности</label>
+                    <select class="form-select" name="abilities[]" multiple="multiple">
+                        <option <?php if($values['ability0']==1) print 'selected="selected"';?> value="1">Бессмертие</option>
+                        <option <?php if($values['ability1']==1) print 'selected="selected"';?> value="2">Прохождение сквозь стены</option>
+                        <option <?php if($values['ability2']==1) print 'selected="selected"';?> value="3">Левитация</option>
+                        <option <?php if($values['ability3']==1) print 'selected="selected"';?> value="4">Невидимость</option>
                     </select>
-                
-            </div>
+                </div>
+            
 
-            <div class="pas <?php if ($errors['bio']) {print 'error';} ?>">
-                Биография:
-                <textarea name="bio"><?php print $values['bio']; ?></textarea>
-            </div>
+                <div class="mb-3 form-floating">
+          <textarea
+            class="form-control"
+            name="bio"
+            style="height: 100px; width: 420px;">
+          <?php print $values['bio_value'];?></textarea>
+                    <label class="form-label">Биография</label>
+                </div>
 
-                        <?php 
-                $cl_e='';
-                $ch='';
-                if($values['check-1'] or !empty($_SESSION['login'])){
-                $ch='checked';
-                }
-                if ($errors['check-1']) {
-                $cl_e='class="error"';
-                }
-                if(empty($_SESSION['login'])){
-                print('
-                <div  '.$cl_e.' >
-                <input name="check" type="checkbox" '.$ch.'> Я согласен на обработку данных <br>
-                </div>');}
-                ?>
+                <div class="mb-3 form-check">
+                    <input
+                        <?php if ($errors['accept_error']) {print 'class="form-check-input error"';} else {print 'class="form-check-input"';} ?>
+                        type="checkbox"
+                        name="accept"
+                        required
+                    >
+                    <label class="form-check-label">Принять пользовательские соглашения</label>
+                </div>
 
-                <p class = "button">
-                   <input type="submit" value="Отправить" />
-                </p>
-                </form>
-            <?php
-            if(empty($_SESSION['login'])){
-            echo'
-            <div class="login">
-                <p> <a href="log.php">У меня уже есть аккаунт</a></p>
-            </div>';
-            }
-            else{
-                echo '
-                <div class="logout">
-                <form action="index.php" method="post">
-		   <p class = "button">
-                      <input name="logout" type="submit" value="Выйти">
-                   </p>
-                </form>
-                </div>';
-            } ?>
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <button class="btn btn-light" type="submit" value="send">Отправить</button>
+                </div>
 
-            <!-- <div class="pas <?php if ($errors['check-1']) {print 'error';} ?> ">
-                <input type="checkbox" name="check-1" <?php if($values['check-1']==TRUE){print 'checked';} ?>/> С контактом ознакомлен(а)
-            </div>
-            <p>
-                Отправка формы:
-                <input type="submit" value="Send" />
-            </p> -->
-        </form>
+            </form>
+
+        </div>
     </div>
+
+</div>
+
 </body>
